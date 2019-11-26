@@ -54,7 +54,7 @@ class ObjectDatum extends Datum
 
     public function toNative($opts)
     {
-        $native = new ArrayObject();
+        $native = [];
         foreach ($this->getValue() as $key => $val) {
             $native[$key] = $val->toNative($opts);
         }
