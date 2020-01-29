@@ -31,9 +31,9 @@ class Table extends ValuedQuery
         return new Get($this, $key);
     }
 
-    public function getAll($key, array $opts = [])
+    public function getAll(...$keysAndOpts)
     {
-        return new GetAll($this, $key, $opts);
+        return new GetAll($this, ...$keysAndOpts);
     }
 
     public function getMultiple($keys, array $opts = [])

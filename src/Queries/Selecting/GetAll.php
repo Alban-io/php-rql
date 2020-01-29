@@ -8,14 +8,18 @@ use r\ValuedQuery\ValuedQuery;
 
 class GetAll extends ValuedQuery
 {
-    public function __construct(Table $table, $key, array $opts = [])
+    public function __construct(Table $table, ...$keysAndOpts)
     {
-        $key = $this->nativeToDatum($key);
-
         $this->setPositionalArg(0, $table);
-        $this->setPositionalArg(1, $key);
-        foreach ($opts as $k => $v) {
-            $this->setOptionalArg($k, $this->nativeToDatum($v));
+
+        foreach ($keysAndOpts as $k => $v) {
+            if (!is_array($v)) {
+                $this->setPositionalArg($k+1, $this->nativeToDatum($v));
+            } else {
+                foreach ($v as $optKey => $optValue) {
+                    $this->setOptionalArg($optKey, $this->nativeToDatum($optValue));
+                }
+            }
         }
     }
 
