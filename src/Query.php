@@ -55,6 +55,13 @@ abstract class Query extends DatumConverter
         return $connection->run($this, $options, $profile);
     }
 
+    public function runToArray(Connection $connection, array $options = []): array
+    {
+        $result = $connection->run($this, $options, $profile);
+
+        return $result instanceof Cursor ? $result->toArray() : (array) $result;
+    }
+
     public function profile(Connection $connection, $options = null, &$result = null)
     {
         if (!isset($options)) {
